@@ -5,8 +5,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.model_selection import GridSearchCV
-import numpy as np
+from bson.binary import Binary
 
+import pickle
+import numpy as np
 
 # Connect to the MongoDB server
 client = pymongo.MongoClient("mongodb://root:your_password@localhost:27017/")
@@ -73,6 +75,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
 # Use k-fold cross-validation to evaluate the model's performance
+# Use k-fold cross-validation to evaluate the model's performance
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 accuracies = []
 for train_idx, test_idx in kf.split(X):
@@ -87,8 +90,21 @@ for train_idx, test_idx in kf.split(X):
     y_pred = clf.predict(X_test_new)
     accuracy = accuracy_score(y_test, y_pred)
     accuracies.append(accuracy)
+
 mean_accuracy = np.mean(accuracies)
 print("Mean accuracy:", mean_accuracy)
+
+# Convert the trained model to bytes
+model_bytes = pickle.dumps(clf)
+
+# Store the model bytes in the database
+model_collection = db["models"]
+model_collection.insert_one({"name": "Random Forest Classifier", "model": Binary(model_bytes)})
+
+# Retrieve the trained model from the database
+model_document = model_collection.find_one({"name": "Random Forest Classifier"})
+model_bytes = model_document["model"]
+clf = pickle.loads(model_bytes)
 
 # Predict the winner for a new match
 radiant_picks = input("Enter the Radiant picks separated by commas: ").split(",")

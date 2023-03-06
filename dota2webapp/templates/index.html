@@ -1,0 +1,185 @@
+<script>
+  function showResults() {
+      var radiantPicks = document.getElementsByName("radiant_picks[]");
+      var direPicks = document.getElementsByName("dire_picks[]");
+      var radiantSelected = [];
+      var direSelected = [];
+
+      for (var i = 0; i < radiantPicks.length; i++) {
+          if (radiantPicks[i].selected) {
+              radiantSelected.push(radiantPicks[i].value);
+          }
+      }
+
+      for (var i = 0; i < direPicks.length; i++) {
+          if (direPicks[i].selected) {
+              direSelected.push(direPicks[i].value);
+          }
+      }
+
+      // Make AJAX request to get prediction results
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/predict", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              // Open new window with prediction results
+              var data = JSON.parse(xhr.responseText);
+              var winProba = (data.proba * 100).toFixed(2);
+              var results = "Radiant team: " + data.radiant.join(", ") + "\n" +
+                            "Dire team: " + data.dire.join(", ") + "\n" +
+                            "Predicted winner: " + data.winner + "\n" +
+                            "Win probability: " + winProba + "%";
+              window.open("", "Prediction Results", "width=400,height=300").document.write(results);
+          }
+      };
+      xhr.send(JSON.stringify({
+          "radiant_picks": radiantSelected,
+          "dire_picks": direSelected
+      }));
+  }
+</script>
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dota 2 Match Predictor</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    label {
+      font-weight: bold;
+    }
+    select {
+      width: 300px;
+      height: 100px;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      margin-top: 20px;
+      width: 100px;
+      height: 30px;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    .picks-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .picks-container .radiant-picks {
+      margin-right: 20px;
+    }
+    .picks-container .dire-picks {
+      margin-left: 20px;
+    }
+  </style>
+<div style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; z-index: 1; display: flex; justify-content: center;">
+  <h1>I am still learning, my results may not be correct</h1>
+</div>
+
+
+</head>
+<body>
+  <form action="{{ url_for('predict') }}" method="POST">
+    <div class="picks-container">
+      <div class="radiant-picks">
+        <label>Radiant:</label>
+        <select name="radiant_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Radiant:</label>
+        <select name="radiant_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Radiant:</label>
+        <select name="radiant_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Radiant:</label>
+        <select name="radiant_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Radiant:</label>
+        <select name="radiant_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="dire-picks">
+        <label>Dire:</label>
+        <select name="dire_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Dire:</label>
+        <select name="dire_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Dire:</label>
+        <select name="dire_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Dire:</label>
+        <select name="dire_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Dire:</label>
+        <select name="dire_picks[]" multiple>
+            {% for hero in hero_names %}
+            <option value="{{ hero }}">{{ hero }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <input type="submit" value="Predict">
+  </form>
+</body>
+</html>
+
+
+
