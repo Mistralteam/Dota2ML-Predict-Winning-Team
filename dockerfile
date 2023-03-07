@@ -1,10 +1,16 @@
-FROM mysql/mysql-server:latest
+FROM python:3.9.6
 
-ENV MYSQL_ROOT_PASSWORD your_password
-ENV MYSQL_DATABASE dota2
+WORKDIR /dota2webapp
 
-COPY ./dota2.sql /docker-entrypoint-initdb.d/
+COPY dota2webapp/requirements.txt .
+RUN pip install -r requirements.txt
+RUN pip install pymongo
+COPY dota2webapp .
 
-COPY my.cnf /etc/mysql/conf.d/
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
 
-CMD ["mysqld"]
+# RUN python 3typesoflearning.py
+# CMD ["python", "3typesoflearning.py", "&&", "flask", "run", "--host=0.0.0.0", "--port=80"]
+# CMD ["sh", "-c", "python 3typesoflearning.py ; flask run --host=0.0.0.0 --port=80"]
+CMD ["sh", "-c", "python deletemodelsonstartup.py ; python 3typesoflearning.py ; flask run --host=0.0.0.0 --port=80"]

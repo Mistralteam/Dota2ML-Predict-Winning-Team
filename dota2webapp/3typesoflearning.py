@@ -20,7 +20,8 @@ import pickle
 import requests
 
 # Connect to the MongoDB server
-client = pymongo.MongoClient("mongodb://root:your_password@localhost:27017/")
+# client = pymongo.MongoClient("mongodb://root:your_password@localhost:27017/")
+client = pymongo.MongoClient("mongodb://root:your_password@db:27017/")
 
 # Access the Dota 2 matches database
 db = client["dota2"]

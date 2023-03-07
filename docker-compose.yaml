@@ -7,10 +7,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: your_password
       MONGO_INITDB_DATABASE: dota2
-    ports:
-      - "27017:27017"
     volumes:
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo-data:/data/db
+    networks:
+      - dota2-network
   mongo-express:
     image: mongo-express
     restart: always
@@ -21,3 +21,21 @@ services:
       ME_CONFIG_MONGODB_SERVER: db
     ports:
       - "8081:8081"
+    networks:
+      - dota2-network
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+      - mongo-express
+    networks:
+      - dota2-network
+networks:
+  dota2-network:
+
+volumes:
+  mongo-data:

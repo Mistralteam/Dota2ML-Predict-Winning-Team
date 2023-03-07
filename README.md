@@ -6,7 +6,7 @@ Dota 2 basic ML to select a winning team based on heroes. A very basic model was
 ## Scripts
 The following scripts are included:
 - `GETCLEANDATA-heropicksmodel.py`: captures 100 items from the OpenDota API.
-- `RFC or SVMprediction.py`: predicts a winner based on the heroes you enter and from the data in your MongoDB.
+- `RFC or SVMprediction.py`: predicts a winner based on the heroes you enter and from the data in your MongoDB. this has changed. sorry.
 
 ## Getting Started
 Before running the scripts, you will need to:
