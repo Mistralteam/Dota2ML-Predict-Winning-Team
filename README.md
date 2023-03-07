@@ -14,6 +14,15 @@ Before running the scripts, you will need to:
 2. Create a database called `dota2`. Once you have done this, the script to collect data will automatically create the tables/collections required.
 3, I have put all the old scripts in oldscript folder, I was orginally using MySQL and abandoned that, so ignore anything you see with mysql. 
 
+
+## Example response on the web app
+SVM predicted probability of radiant win: 0.16641761794833765
+Logistic Regression predicted probability of radiant win: 0.0011618670432271027
+Random Forest predicted probability of radiant win: 0.24358752972403383
+Neural Network predicted probability of radiant win: 0.0019183646725138119
+
+Predicted winner: Dire
+
 ## Future Plans
 Future plans for this code include:
 - Creating a basic web front-end allowing people to pick the heroes and work out best hero matchups or predictions on who would win.
