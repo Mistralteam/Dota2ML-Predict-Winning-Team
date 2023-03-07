@@ -12,6 +12,7 @@ The following scripts are included:
 Before running the scripts, you will need to:
 1. Run the Docker Compose file to allow it to spin up a MongoDB.
 2. Create a database called `dota2`. Once you have done this, the script to collect data will automatically create the tables/collections required.
+3, I have put all the old scripts in oldscript folder, I was orginally using MySQL and abandoned that, so ignore anything you see with mysql. 
 
 ## Future Plans
 Future plans for this code include:
