@@ -11,6 +11,7 @@ ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
 # RUN python 3typesoflearning.py
-# CMD ["python", "3typesoflearning.py", "&&", "flask", "run", "--host=0.0.0.0", "--port=80"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]
 # CMD ["sh", "-c", "python 3typesoflearning.py ; flask run --host=0.0.0.0 --port=80"]
-CMD ["sh", "-c", "python deletemodelsonstartup.py ; python 3typesoflearning.py ; flask run --host=0.0.0.0 --port=80"]
+# CMD ["sh", "-c", "python deletemodelsonstartup.py ; python 3typesoflearning.py ; flask run --host=0.0.0.0 --port=80"]
+
